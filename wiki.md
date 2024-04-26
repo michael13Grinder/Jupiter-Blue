@@ -14,7 +14,9 @@ In order to assess the performance of the project, 5 key indicators are used:
 - Data transmission rate
 - M5Core2 ables to configurate and display gesture captured in reasonable manner
 ### System Overview
+#### Hardware Architecture
 ![System Breakdown](SystemBreakdown.jpeg)
+#### Top-level Flow Chart of Software IMplementation
 ### Sensor Integration
 #### Sensor
 The A111/AWR1843 mmW Radar will be used for the senor in this project. The Radar is mainly used for capturing gesture. 
