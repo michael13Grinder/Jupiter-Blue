@@ -1,6 +1,6 @@
 # Jupiter-Blue
 
-Thuan Pham
-Tsz Chung Mak
-Michael Guarrera
-Jayden Situ
+Thuan Pham <br>
+Tsz Chung Mak <br>
+Michael Guarrera <br>
+Jayden Situ <br>

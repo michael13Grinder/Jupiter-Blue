@@ -1,8 +1,8 @@
 # Jupiter - Blue Wiki
 ## Team Member List and Roles
 Tsz Chung Mak - mmW Radar Implementation <br>
-Jayden Situ - M5Core2 Communication
-Michael Guarrera - Machine Learning Algorithm
+Jayden Situ - M5Core2 Communication <br>
+Michael Guarrera - Machine Learning Algorithm <br>
 Thuan Pham - Machine Learning Algorithm
 ## Project Overview
 Use mmW Radar to determine hand gestures to control HID as a mouse to interact with PC interface
