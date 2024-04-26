@@ -1,6 +1,6 @@
 # Jupiter - Blue Wiki
 ## Team Member List and Roles
-Tsz Chung Mak - mmW Radar Implementation
+Tsz Chung Mak - mmW Radar Implementation <br>
 Jayden Situ - M5Core2 Communication
 Michael Guarrera - Machine Learning Algorithm
 Thuan Pham - Machine Learning Algorithm
