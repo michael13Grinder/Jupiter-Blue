@@ -32,8 +32,24 @@ The radar will be placed in front of the PC which is for the HID interface. The 
 the button from one of the M5 Core 2 is pressed, the radar will capture all the previous data and send them to PC. At the beginning, all the data will be used for machine learning.
 After the learning process is finished, the sensor data will be used to recognize gesture. After the gesture is recognized, action will be performed in the HID interface correspondingly.
 ### Wireless Network Communication
+#### Network Topology and IoT Protocols:
+MQTT (Message Queuing Telemetry Transport): Used for communication between the M5core2 device and the NRF52840_DK board. MQTT is a lightweight and efficient protocol for IoT communication, ideal for low-power devices and scenarios where bandwidth is limited.
+Serial Communication: Employed to connect the NRF52840_DK board to the PC software running Python for machine learning. Serial communication provides a reliable and straightforward way to transfer data between devices over a physical connection.
+#### Data Rate Requirement:
+Given the real-time or near real-time nature of gesture recognition, the data rate required for communication should be capable of handling multiple gestures per second. The specific data rate will depend on factors such as the complexity of gestures, the frequency of updates, and the precision required for gesture recognition.
+MQTT is generally efficient and can handle moderate data rates effectively. Serial communication between the NRF52840_DK board and the PC is typically fast enough to support real-time data transfer for gesture recognition applications.
+#### Message Protocol Diagram
+![Message Protocol Diagram](protocol_diagram.jpeg)
 ### Algorithms for Machine Learning
 ### DIKW Pyramid Abstration
+#### Data:
+Raw data obtained from the mmW Radar includes distance measurements, capturing the positions and movements of hands and arms. This data includes numeric values representing distances between the radar and various parts of the body.
+#### Information:
+Processed data that has been transformed into meaningful information. This stage involves converting raw distance measurements into spatial gestures, identifying patterns such as hand movements, gestures, and their corresponding distances.
+#### Knowledge:
+Involves the application of machine learning algorithms to analyze the information gathered from the radar. This includes training the ML model to recognize specific hand gestures based on the patterns identified in the information stage. The model learns to associate certain distance measurements and movements with predefined gestures like mouse movements or keyboard inputs.
+#### Wisdom:
+The highest level of understanding derived from the knowledge gained. At this stage, the system is capable of accurately recognizing a wide range of gestures using mmW Radar data. It can translate these gestures into actions on a computer, such as controlling the mouse cursor or simulating keyboard inputs. Additionally, the system can display the recognized gestures as icons on the M5core2 device, providing real-time feedback to the user.
 ## Equipment
 - M5Core2 x 2
 - NRF52840 DK
