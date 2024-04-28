@@ -62,5 +62,10 @@ The highest level of understanding derived from the knowledge gained. At this st
 - mmW Radar
 - PC Interface
 ## Progress
+Publish Gesture
+
+MQTT Communication
+
+Subcribe Gesture
 ## Reference
 [1]: https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer
