@@ -63,15 +63,15 @@ The highest level of understanding derived from the knowledge gained. At this st
 - PC Interface
 ## Progress
 
-Publish Gesture
+#### Publish Gesture
 
 ![Publish Gesture Code](PublishGesture.jpeg)
 
-Subcribe Gesture
+#### Subcribe Gesture
 
 ![Subscribe Gesture Code](SubscribeGesture.jpeg) 
 
-MQTT Communication
+#### MQTT Communication
 
 ![MQTT Communication Code](MQTT.jpeg)
 
