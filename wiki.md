@@ -63,9 +63,10 @@ The highest level of understanding derived from the knowledge gained. At this st
 - PC Interface
 ## Progress
 Publish Gesture
-
-MQTT Communication
-
+![Publish Gesture Code](PublishGesture.jpeg)
 Subcribe Gesture
+![Subscribe Gesture Code](SubscribeGesture.jpeg)
+MQTT Communication
+![MQTT Communication Code](MQTT.jpeg)
 ## Reference
 [1]: https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer
