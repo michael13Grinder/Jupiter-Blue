@@ -41,6 +41,12 @@ MQTT is generally efficient and can handle moderate data rates effectively. Seri
 #### Message Protocol Diagram
 ![Message Protocol Diagram](protocol_diagram.jpeg)
 ### Algorithms for Machine Learning
+The goal of the project is for the system to accurately unpack the data collected from mmW Radar, hence correctly identifying the hand gestures from the data received. The potential issue of this is since hand movement can be either exagerated of micro due to human incosistency, it is difficult to determine the correct parameters and constants used for the recognition algorithm.<br>
+This is where machine learning come in, by using machine learning, we hope to train the AI to adapt to inconsistency in human behaviour and correctly identify hand gesture without relying on pre-determined parameters.<br>
+To train the data, a PC camera will be used in the process, the purpose of the camera is to create a dynamic training set for our hand gesture algorithm to train from. Using this method instead of a fix training set avoid overfitting the model and consequently lack of the flexibility and cannot adapt to human inconsistency as mentioned.<br>
+The PC camera hand gesture recognition will use Google Mediapipe as a starting point [1], this will be more accurate since the library have successful predecessor example. Than the gesture regconised by the camera will then be compared by the gesture recognised by our algorithm, which then our algorithm will learn from the error (if any) and train it self. <br>
+At the moment, the machine learning method considering is using neural network, and the programming language will use Python, which already exist library for Google Mediapipe and neural network algorithm.
+
 ### DIKW Pyramid Abstration
 #### Data:
 Raw data obtained from the mmW Radar includes distance measurements, capturing the positions and movements of hands and arms. This data includes numeric values representing distances between the radar and various parts of the body.
@@ -56,3 +62,5 @@ The highest level of understanding derived from the knowledge gained. At this st
 - mmW Radar
 - PC Interface
 ## Progress
+## Reference
+[1]: https://developers.google.com/mediapipe/solutions/vision/gesture_recognizer
