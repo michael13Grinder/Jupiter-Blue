@@ -8,11 +8,13 @@ Thuan Pham - Machine Learning Algorithm
 Use mmW Radar to determine hand gestures to control HID as a mouse to interact with PC interface
 ### Performance Indicator:
 In order to assess the performance of the project, 5 key indicators are used:
-- Accuracy of mmW Radar reading
-- Accuracy of gesture recognition
-- Accuracy in receive HID protocol from PC
-- Data transmission rate
-- M5Core2 ables to configurate and display gesture captured in reasonable manner
+- Accuracy of mmW Radar reading: It is about how accurate can the mmW capture the gesture perform by the user. Whatever gesture is perform in
+front of radar, it should be captured accurately for later recognition.
+- Accuracy of gesture recognition: The radar should be able to identifiy all the predefined gestures for HID interface and also able to exclude all 
+other unkown gestures.
+- Accuracy in receive HID protocol from PC: Can the HID protocol get executed properly based on the performed gestures.
+- Data transmission rate: How fast the HID protocol being executed after a gesture is perfromed.
+- M5Core2 ables to configurate and display gesture captured in reasonable manner: The gesture displayed on the M5 Core 2 should be readable and clear to understand
 ### System Overview
 #### Hardware Architecture
 ![System Breakdown](SystemBreakdown.jpeg)
