@@ -17,6 +17,7 @@ In order to assess the performance of the project, 5 key indicators are used:
 #### Hardware Architecture
 ![System Breakdown](SystemBreakdown.jpeg)
 #### Top-level Flow Chart of Software IMplementation
+![Message Protocol Diagram](flowchart.jpg)
 ### Sensor Integration
 #### Sensor
 The A111/AWR1843 mmW Radar will be used for the senor in this project. The Radar is mainly used for capturing gesture. 
@@ -33,8 +34,8 @@ the button from one of the M5 Core 2 is pressed, the radar will capture all the 
 After the learning process is finished, the sensor data will be used to recognize gesture. After the gesture is recognized, action will be performed in the HID interface correspondingly.
 ### Wireless Network Communication
 #### Network Topology and IoT Protocols:
-MQTT (Message Queuing Telemetry Transport): Used for communication between the M5core2 device and the NRF52840_DK board. MQTT is a lightweight and efficient protocol for IoT communication, ideal for low-power devices and scenarios where bandwidth is limited.
-Serial Communication: Employed to connect the NRF52840_DK board to the PC software running Python for machine learning. Serial communication provides a reliable and straightforward way to transfer data between devices over a physical connection.
+- MQTT (Message Queuing Telemetry Transport): Used for communication between the M5core2 device and the NRF52840_DK board. MQTT is a lightweight and efficient protocol for IoT communication, ideal for low-power devices and scenarios where bandwidth is limited.
+- Serial Communication: Employed to connect the NRF52840_DK board to the PC software running Python for machine learning. Serial communication provides a reliable and straightforward way to transfer data between devices over a physical connection.
 #### Data Rate Requirement:
 Given the real-time or near real-time nature of gesture recognition, the data rate required for communication should be capable of handling multiple gestures per second. The specific data rate will depend on factors such as the complexity of gestures, the frequency of updates, and the precision required for gesture recognition.
 MQTT is generally efficient and can handle moderate data rates effectively. Serial communication between the NRF52840_DK board and the PC is typically fast enough to support real-time data transfer for gesture recognition applications.
@@ -63,15 +64,15 @@ The highest level of understanding derived from the knowledge gained. At this st
 - PC Interface
 ## Progress
 
-#### Publish Gesture
+### Publish Gesture
 
 ![Publish Gesture Code](PublishGesture.jpeg)
 
-#### Subcribe Gesture
+### Subcribe Gesture
 
 ![Subscribe Gesture Code](SubscribeGesture.jpeg) 
 
-#### MQTT Communication
+### MQTT Communication
 
 ![MQTT Communication Code](MQTT.jpeg)
 
