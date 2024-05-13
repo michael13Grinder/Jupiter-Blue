@@ -13,7 +13,7 @@ DATA_PORT = 'COM11'
 CLIport = {}
 Dataport = {}
 byteBuffer = np.zeros(2**15,dtype = 'uint8')
-byteBufferLength = 0;
+byteBufferLength = 0
 
 
 # ------------------------------------------------------------------
@@ -199,6 +199,7 @@ def readAndParseData18xx(Dataport, configParameters):
 
             # Check the header of the TLV message
             tlv_type = np.matmul(byteBuffer[idX:idX+4],word)
+            # tlv_type = MMWDEMO_UART_MSG_DETECTED_POINTS
             idX += 4
             tlv_length = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
@@ -270,63 +271,14 @@ def update():
     
     return dataOk
 
-def format_data(input_data):
-    num_objects = input_data['numObj']
-    formatted_data = []
-    
-    for i in range(num_objects):
-        x_i = input_data['x'][i]
-        y_i = input_data['y'][i]
-        z_i = input_data['z'][i]
-        v_i = input_data['velocity'][i]
-        
-        formatted_data.append([x_i, y_i, z_i, v_i])
-    
-    return formatted_data
-
-def flatten_list_data(input_data):
-    num_objects = input_data['numObj']
-    flattened_data = []
-    
-    for i in range(num_objects):
-        flattened_data.append(input_data['x'][i])
-        flattened_data.append(input_data['y'][i])
-        flattened_data.append(input_data['z'][i])
-        flattened_data.append(input_data['velocity'][i])
-    
-    return flattened_data
-
-def flatten_data(input_data):
-    num_objects = input_data['numObj']
-    flattened_data = []
-    
-    for i in range(num_objects):
-        flattened_data.append(input_data['x'][i])
-    for i in range(num_objects):
-        flattened_data.append(input_data['y'][i])
-    for i in range(num_objects):
-        flattened_data.append(input_data['z'][i])
-    for i in range(num_objects):
-        flattened_data.append(input_data['velocity'][i])
-    
-    return flattened_data
-
 def get_data():
     global dataOk        
     if dataOk:
         global detObj
-        return flatten_data(detObj) 
-
-def quit():
-    global win
-    CLIport.write(('sensorStop\n').encode())
-    CLIport.close()
-    Dataport.close()
-    win.close()
-    sys.exit(0)
+        return detObj
 
 # -------------------------    MAIN   -----------------------------------------  
-def main(quit_queue):
+def main():
     # Configurate the serial port
     CLIport, Dataport = serialConfig(configFileName)
 
@@ -340,7 +292,6 @@ def main(quit_queue):
 
     # Set the plot 
     pg.setConfigOption('background','w')
-    global win
     win = pg.GraphicsLayoutWidget(title="2D scatter plot")
     p = win.addPlot()
     p.setXRange(-0.5,0.5)
@@ -371,9 +322,6 @@ def main(quit_queue):
                 currentIndex += 1
             
             time.sleep(0.05) # Sampling frequency of 30 Hz
-
-            if not quit_queue.empty():
-                quit()
             
         # Stop the program and close everything if Ctrl + c is pressed
         except KeyboardInterrupt:
@@ -384,7 +332,8 @@ def main(quit_queue):
             break
         
     
-
+# if __name__ == "__main__":
+#     main()
 
 
 

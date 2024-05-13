@@ -1,28 +1,57 @@
 import numpy as np
 import threading
-import signal
-from queue import Queue
 import time
 import sys
 sys.path.insert(1, 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master')
 import readData_AWR1843
 
-# Create a queue for communication
-quit_queue = Queue()
+def format_data(input_data):
+    num_objects = input_data['numObj']
+    formatted_data = []
+    
+    for i in range(num_objects):
+        x_i = input_data['x'][i]
+        y_i = input_data['y'][i]
+        z_i = input_data['z'][i]
+        v_i = input_data['velocity'][i]
+        
+        formatted_data.append([x_i, y_i, z_i, v_i])
+    
+    return formatted_data
 
-# Signal handler function
-def signal_handler(sig, frame):
-    print("\nKeyboard Interrupt received. Signaling thread to quit.")
-    quit_queue.put(True)
+def flatten_list_data(input_data):
+    num_objects = input_data['numObj']
+    flattened_data = []
+    
+    for i in range(num_objects):
+        flattened_data.append(input_data['x'][i])
+        flattened_data.append(input_data['y'][i])
+        flattened_data.append(input_data['z'][i])
+        flattened_data.append(input_data['velocity'][i])
+    
+    return flattened_data
 
-# Register the signal handler for SIGINT (Keyboard Interrupt)
-signal.signal(signal.SIGINT, signal_handler)
+def flatten_data(input_data):
+    num_objects = input_data['numObj']
+    flattened_data = []
+    
+    for i in range(num_objects):
+        flattened_data.append(input_data['x'][i])
+    for i in range(num_objects):
+        flattened_data.append(input_data['y'][i])
+    for i in range(num_objects):
+        flattened_data.append(input_data['z'][i])
+    for i in range(num_objects):
+        flattened_data.append(input_data['velocity'][i])
+    
+    return flattened_data
+
 
 # Open files for appending data
 X_train_file = open("X_train.txt", "a")
 y_train_gesture_file = open("y_train_gesture.txt", "a")
 
-thread1 = threading.Thread(target=readData_AWR1843.main, args=(quit_queue,))
+thread1 = threading.Thread(target=readData_AWR1843.main)
 thread1.start()
 
 time.sleep(2)
@@ -38,9 +67,17 @@ while True:
             mmW_data = None
             while (mmW_data is None):
                 mmW_data = readData_AWR1843.get_data()
+                mmW_data = flatten_data(mmW_data)
+
+            print(len(mmW_data))
         
             for value in mmW_data:
                 mmW_data_accumulated.append(value)
+            
+            time.sleep(0.5 / 15)
+        
+        # print(len(mmW_data_accumulated))
+        # print(len(mmW_data_accumulated) / (6*4))
 
         if not mmW_data_accumulated:
             continue
@@ -59,8 +96,8 @@ while True:
         X_train_file.close()
         y_train_gesture_file.close()
 
-        time.sleep(1)
-
         thread1.join()
+
+        break
 
 
