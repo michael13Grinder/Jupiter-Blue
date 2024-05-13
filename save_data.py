@@ -46,6 +46,18 @@ def flatten_data(input_data):
     
     return flattened_data
 
+def get_velocity(input_data):
+    num_objects = input_data['numObj']
+    velocity_data = []
+    
+    for i in range(num_objects):
+        velocity_data.append(input_data['velocity'][i])
+    
+    while len(velocity_data) < 10:
+        velocity_data.append(0)
+
+    return velocity_data
+
 
 # Open files for appending data
 X_train_file = open("X_train.txt", "a")
@@ -68,23 +80,23 @@ while True:
             while (mmW_data is None):
                 mmW_data = readData_AWR1843.get_data()
 
-            mmW_data = flatten_data(mmW_data)
+            mmW_data = get_velocity(mmW_data)
 
-            print(len(mmW_data))
+            # print(len(mmW_data))
         
             for value in mmW_data:
                 mmW_data_accumulated.append(value)
             
             time.sleep(0.5 / 15)
         
-        # print(len(mmW_data_accumulated))
+        print(len(mmW_data_accumulated))
         # print(len(mmW_data_accumulated) / (6*4))
 
         if not mmW_data_accumulated:
             continue
 
         # Save mmW data to X_train file
-        X_train_file.write(','.join(map(str, mmW_data_accumulated)) + '\n')
+        X_train_file.write(' '.join(map(str, mmW_data_accumulated)) + '\n')
 
         # Append gesture label to y_train_gesture file
         y_train_gesture_file.write(gesture_label + '\n')

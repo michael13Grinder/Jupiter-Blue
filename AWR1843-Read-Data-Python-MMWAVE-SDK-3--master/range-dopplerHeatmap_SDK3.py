@@ -293,6 +293,7 @@ while True:
         if dataOk:
             # Store the current frame into frameData
             frameData[currentIndex] = detObj
+            print(detObj['numObj'])
             # print(detObj)
             currentIndex += 1
         

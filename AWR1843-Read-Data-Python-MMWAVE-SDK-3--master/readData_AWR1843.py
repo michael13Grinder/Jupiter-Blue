@@ -6,7 +6,7 @@ from pyqtgraph.Qt import QtGui
 import sys
 
 # Change the configuration file name
-configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\AWR1843config.cfg'
+configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\A1843RangeDoppler.cfg'
 USER_PORT = 'COM10'
 DATA_PORT = 'COM11'
 
@@ -316,7 +316,7 @@ def main():
             if dataOk:
                 # Store the current frame into frameData
                 frameData[currentIndex] = detObj
-                # print(detObj)
+                # print(detObj['velocity'])
                 # print(format_data(detObj))
                 # print(flatten_data(detObj))
                 currentIndex += 1
@@ -332,8 +332,8 @@ def main():
             break
         
     
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
 
 
