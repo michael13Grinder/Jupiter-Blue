@@ -67,7 +67,8 @@ while True:
             mmW_data = None
             while (mmW_data is None):
                 mmW_data = readData_AWR1843.get_data()
-                mmW_data = flatten_data(mmW_data)
+
+            mmW_data = flatten_data(mmW_data)
 
             print(len(mmW_data))
         
