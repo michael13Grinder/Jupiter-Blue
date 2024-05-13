@@ -65,6 +65,9 @@ The highest level of understanding derived from the knowledge gained. At this st
 - mmW Radar
 - PC Interface
 ## Progress
+- Finish configuring the radar for gesture recognition
+- Start trying the machine learning with the radar
+- Start coding the M5 Core 2 for timer 
 
 ### Publish Gesture
 
