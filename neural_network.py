@@ -38,6 +38,9 @@ train_images = np.reshape(train_images, (len(train_images), 1, number_input))
 train_labels = np.reshape(train_labels, (len(train_labels), 1))
 train_labels = train_labels / 4.0
 
+print("Train Image Shape: ", train_images.shape)
+print("Train Label Shape: ", train_labels.shape)
+
 model = keras.Sequential([
     keras.layers.Input(shape=(1, number_input), batch_size=len(train_labels)),  # input layer (1)
     keras.layers.Dense(128, activation='relu'),  # hidden layer (2)
@@ -47,12 +50,5 @@ model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 model.fit(train_images, train_labels, epochs=10)
-
-# # test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=1) 
-# # print('Test accuracy:', test_acc)
-
-# # predictions = model.predict(test_images)
-
-# # print('Prediction: ', class_names[np.argmax(predictions[0])])
 
 model.save('trained_model.keras')

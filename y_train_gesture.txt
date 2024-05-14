@@ -106,7 +106,6 @@ none
 left
 right
 up
-
 down
 none
 left

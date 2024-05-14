@@ -4,11 +4,12 @@ import numpy as np
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtGui
 import sys
+import os
 
 # Change the configuration file name
-configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\A1843RangeDoppler.cfg'
-USER_PORT = 'COM10'
-DATA_PORT = 'COM11'
+configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master' + os.sep + 'A1843RangeDoppler.cfg'
+USER_PORT = '/dev/ttyACM0'
+DATA_PORT = '/dev/ttyACM1'
 
 CLIport = {}
 Dataport = {}
@@ -264,10 +265,10 @@ def update():
         x = -detObj["x"]
         y = detObj["y"]
         
-        global s
-        s.setData(x,y)
+        # global s
+        # s.setData(x,y)
         # QtGui.QApplication.processEvents()
-        pg.QtWidgets.QApplication.processEvents()
+        # pg.QtWidgets.QApplication.processEvents()
     
     return dataOk
 
@@ -288,19 +289,19 @@ def main():
 
     # START QtAPPfor the plot
     # app = QtGui.QApplication([])
-    app = pg.QtWidgets.QApplication([])
+    # app = pg.QtWidgets.QApplication([])
 
     # Set the plot 
-    pg.setConfigOption('background','w')
-    win = pg.GraphicsLayoutWidget(title="2D scatter plot")
-    p = win.addPlot()
-    p.setXRange(-0.5,0.5)
-    p.setYRange(0,1.5)
-    p.setLabel('left',text = 'Y position (m)')
-    p.setLabel('bottom', text= 'X position (m)')
-    global s
-    s = p.plot([],[],pen=None,symbol='o')
-    win.show()
+    # pg.setConfigOption('background','w')
+    # win = pg.GraphicsLayoutWidget(title="2D scatter plot")
+    # p = win.addPlot()
+    # p.setXRange(-0.5,0.5)
+    # p.setYRange(0,1.5)
+    # p.setLabel('left',text = 'Y position (m)')
+    # p.setLabel('bottom', text= 'X position (m)')
+    # global s
+    # s = p.plot([],[],pen=None,symbol='o')
+    # win.show()
     
     # Main loop 
     global detObj
@@ -316,7 +317,7 @@ def main():
             if dataOk:
                 # Store the current frame into frameData
                 frameData[currentIndex] = detObj
-                # print(detObj['velocity'])
+                print(detObj['velocity'])
                 # print(format_data(detObj))
                 # print(flatten_data(detObj))
                 currentIndex += 1
@@ -328,7 +329,7 @@ def main():
             CLIport.write(('sensorStop\n').encode())
             CLIport.close()
             Dataport.close()
-            win.close()
+            # win.close()
             break
         
     
