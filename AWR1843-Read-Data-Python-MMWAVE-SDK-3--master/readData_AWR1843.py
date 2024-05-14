@@ -317,7 +317,7 @@ def main():
             if dataOk:
                 # Store the current frame into frameData
                 frameData[currentIndex] = detObj
-                print(detObj['velocity'])
+                # print(detObj['velocity'])
                 # print(format_data(detObj))
                 # print(flatten_data(detObj))
                 currentIndex += 1

@@ -36,7 +36,7 @@ while True:
 train_images = np.array(train_images, dtype=float)
 train_images = np.reshape(train_images, (len(train_images), 1, number_input))
 train_labels = np.reshape(train_labels, (len(train_labels), 1))
-train_labels = train_labels / 4.0
+# train_labels = train_labels / 4.0
 
 print("Train Image Shape: ", train_images.shape)
 print("Train Label Shape: ", train_labels.shape)
