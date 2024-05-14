@@ -53,8 +53,10 @@ def get_velocity(input_data):
     for i in range(num_objects):
         velocity_data.append(input_data['velocity'][i])
     
-    while len(velocity_data) < 10:
+    while len(velocity_data) < 12:
         velocity_data.append(0)
+    
+    velocity_data = velocity_data[:11]
 
     return velocity_data
 
@@ -98,8 +100,20 @@ while True:
         # Save mmW data to X_train file
         X_train_file.write(' '.join(map(str, mmW_data_accumulated)) + '\n')
 
+        gesture_encoding = "0"
+        if (gesture_label == "none"):
+            gesture_encoding = "0"
+        elif (gesture_label == "left"):
+            gesture_encoding = "1"
+        elif (gesture_label == "right"):
+            gesture_encoding = "2"
+        elif (gesture_label == "up"):
+            gesture_encoding = "3"
+        elif (gesture_label == "down"):
+            gesture_encoding = "4"
+
         # Append gesture label to y_train_gesture file
-        y_train_gesture_file.write(gesture_label + '\n')
+        y_train_gesture_file.write(gesture_encoding + '\n')
 
         print("Data saved successfully.")
 
