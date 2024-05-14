@@ -43,7 +43,9 @@ print("Train Label Shape: ", train_labels.shape)
 
 model = keras.Sequential([
     keras.layers.Input(shape=(1, number_input), batch_size=len(train_labels)),  # input layer (1)
-    keras.layers.Dense(128, activation='relu'),  # hidden layer (2)
+    keras.layers.Dense(150, activation='linear'),  # hidden layer (2)
+    keras.layers.Dense(150, activation='relu'),  # hidden layer (2)
+    keras.layers.Dense(100, activation='relu'),  # hidden layer (2)
     keras.layers.Dense(len(class_names), activation='softmax') # output layer (3)
 ])
 model.compile(optimizer='adam',
