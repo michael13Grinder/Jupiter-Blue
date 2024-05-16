@@ -80,16 +80,14 @@ model = keras.Sequential([
     # keras.layers.MaxPooling1D(2),
     # keras.layers.Dropout(0.3),
     keras.layers.Conv1D(256, 3, activation='relu'),
-    keras.layers.Conv1D(512, 3, activation='relu'),
     keras.layers.Flatten(),
-    keras.layers.Dense(1000, activation='relu'),
- 
-    keras.layers.Dense(1000, activation='relu'),
-   
-    keras.layers.Dense(1000, activation='relu'),
+    keras.layers.Dense(2058, activation='relu'),
+    keras.layers.Dense(1024, activation='relu'),
     keras.layers.Dropout(0.3),
+    keras.layers.Dense(512, activation='relu'),
+    keras.layers.Dropout(0.2),
     keras.layers.Dense(256, activation='relu'),
-    keras.layers.Dropout(0.3),
+    keras.layers.Dropout(0.1),
     keras.layers.Dense(len(gesture_list), activation='softmax')
 ])
 
@@ -99,7 +97,7 @@ model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.000001),
               metrics=['accuracy'])
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=300, validation_data=(X_val, y_val), callbacks=[EarlyStopping(patience=20)])
+history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_val, y_val), callbacks=[EarlyStopping(patience=500)])
 
 # Plotting loss
 plt.plot(history.history['loss'], label='Training Loss')
