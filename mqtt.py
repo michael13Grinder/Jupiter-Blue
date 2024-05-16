@@ -60,7 +60,7 @@ def mqtt_thread():
 
     # mqttc.publish()
 
-def serial_thread():
+def main_thread():
     while True:
         while True:
             try:
@@ -73,33 +73,11 @@ def serial_thread():
                 pass
 
         while True:
-            data_str = ""
-            while True:
-                try:
-                    byte = ser.read()  # Read one byte at a time
-                    if byte:
-                        # Append the byte to the string
-                        # print(byte)
-                        data_str += byte.decode('utf-8')  # Assuming UTF-8 encoding
-                        # Check if the entire JSON string has been received
-                        if data_str.endswith('}'):
-                            break  # Exit the loop once the JSON string is complete
-                except:
-                    print("Disconnected")
-                    break
-            
-            print("Received:", data_str)
-
-            # Parse JSON string into a Python dictionary
-            data = json.loads(data_str)
-
-
-            # Accessing values from the dictionary
-            node = data['node']
-            x_coordinate = data['x']
-            y_coordinate = data['y']
-            rssi_value = data['rssi']
-
+            try:
+                ser.write(1)
+            except:
+                print("Disconnected")
+                break
 
             time.sleep(0.1)
 
@@ -108,9 +86,9 @@ def main():
     mqtt_thread_id.daemon = True
     mqtt_thread_id.start()
 
-    serial_thread_id = threading.Thread(target=serial_thread)
-    serial_thread_id.daemon = True
-    serial_thread_id.start()
+    main_thread_id = threading.Thread(target=main_thread)
+    main_thread_id.daemon = True
+    main_thread_id.start()
 
     # global gui
     # root = tk.Tk()

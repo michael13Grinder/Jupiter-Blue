@@ -121,6 +121,7 @@ def readAndParseData18xx(Dataport, configParameters):
     readBuffer = Dataport.read(Dataport.in_waiting)
     byteVec = np.frombuffer(readBuffer, dtype = 'uint8')
     byteCount = len(byteVec)
+    rangeDoppler = None
     
     # Check that the buffer is not full, and then add the data to the buffer
     if (byteBufferLength + byteCount) < maxBufferSize:
@@ -199,7 +200,7 @@ def readAndParseData18xx(Dataport, configParameters):
             word = [1, 2**8, 2**16, 2**24]
 
             # Check the header of the TLV message
-            tlv_type = np.matmul(byteBuffer[idX:idX+4],word)
+            # tlv_type = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
             tlv_length = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
@@ -245,8 +246,11 @@ def readAndParseData18xx(Dataport, configParameters):
                 #     continue
 
                 # Convert the range doppler array to a matrix
-                rangeDoppler = np.reshape(rangeDoppler, (configParameters["numDopplerBins"], configParameters["numRangeBins"]),'F') #Fortran-like reshape
-                rangeDoppler = np.append(rangeDoppler[int(len(rangeDoppler)/2):], rangeDoppler[:int(len(rangeDoppler)/2)], axis=0)
+                try:
+                    rangeDoppler = np.reshape(rangeDoppler, (configParameters["numDopplerBins"], configParameters["numRangeBins"]),'F') #Fortran-like reshape
+                    rangeDoppler = np.append(rangeDoppler[int(len(rangeDoppler)/2):], rangeDoppler[:int(len(rangeDoppler)/2)], axis=0)
+                except:
+                    rangeDoppler = None
 
                 # Generate the range and doppler arrays for the plot
                 # rangeArray = np.array(range(configParameters["numRangeBins"]))*configParameters["rangeIdxToMeters"]
@@ -257,7 +261,6 @@ def readAndParseData18xx(Dataport, configParameters):
                 # fig.colorbar(cs, shrink=0.9)
                 # fig.canvas.draw()
                 # plt.pause(0.1)
-                return rangeDoppler
                 
  
         # Remove already processed data
@@ -273,7 +276,7 @@ def readAndParseData18xx(Dataport, configParameters):
             if byteBufferLength < 0:
                 byteBufferLength = 0         
 
-    return dataOK, frameNumber, detObj
+    return rangeDoppler
 
 # -------------------------    MAIN   -----------------------------------------  
 
@@ -286,6 +289,8 @@ configParameters = parseConfigFile(configFileName)
 X_train_file = open("X_train.txt", "a")
 y_train_gesture_file = open("y_train_gesture.txt", "a")
 gesture_list = ['idle', 'left', 'right', 'up', 'down']
+count = 0
+
 
 while True:
     try:
@@ -310,6 +315,8 @@ while True:
                 continue
             time.sleep(0.025)
         np.savetxt(X_train_file, accumulate_data, fmt='%1.4f')
+        count += 1
+        print(count)
 
         gesture_encoding = "0"
         if (gesture_label == "idle"):
@@ -325,6 +332,7 @@ while True:
 
         # Append gesture label to y_train_gesture file
         y_train_gesture_file.write(gesture_encoding + '\n')
+
         
     # Stop the program and close everything if Ctrl + c is pressed
     except KeyboardInterrupt:

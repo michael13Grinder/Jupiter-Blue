@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Change the configuration file name
-configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\AWR1843config.cfg'
+# configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\xwr18xx_profile_2024_05_15T01_44_15_681.cfg'
+configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master\A1843RangeDoppler.cfg'
 
 CLIport = {}
 Dataport = {}
@@ -81,7 +82,8 @@ def parseConfigFile(configFileName):
 
             
     # Combine the read data to obtain the configuration parameters           
-    numChirpsPerFrame = (chirpEndIdx - chirpStartIdx + 1) * numLoops
+    # numChirpsPerFrame = (chirpEndIdx - chirpStartIdx + 1) * numLoops
+    numChirpsPerFrame = 48
     configParameters["numDopplerBins"] = numChirpsPerFrame // numTxAnt
     configParameters["numRangeBins"] = numAdcSamplesRoundTo2
     configParameters["rangeResolutionMeters"] = (3e8 * digOutSampleRate * 1e3) / (2 * freqSlopeConst * 1e12 * numAdcSamples)
@@ -202,6 +204,8 @@ def readAndParseData18xx(Dataport, configParameters):
             tlv_length = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
 
+            tlv_type = MMWDEMO_OUTPUT_MSG_RANGE_DOPPLER_HEAT_MAP
+
             # Read the data depending on the TLV message
             if tlv_type == MMWDEMO_UART_MSG_DETECTED_POINTS:
 
@@ -227,6 +231,7 @@ def readAndParseData18xx(Dataport, configParameters):
                 detObj = {"numObj": numDetectedObj, "x": x, "y": y, "z": z, "velocity":velocity}
                 dataOK = 1
             elif tlv_type == MMWDEMO_OUTPUT_MSG_RANGE_DOPPLER_HEAT_MAP:
+                # print("here")
 
                 # Get the number of bytes to read
                 numBytes = 2*configParameters["numRangeBins"]*configParameters["numDopplerBins"]
@@ -238,8 +243,11 @@ def readAndParseData18xx(Dataport, configParameters):
 
                 # Some frames have strange values, skip those frames
                 # TO DO: Find why those strange frames happen
-                if np.max(rangeDoppler) > 10000:
-                    continue
+                # if np.max(rangeDoppler) > 10000:
+                #     print("lmao")
+                #     continue
+
+                # print(rangeDoppler)
 
                 # Convert the range doppler array to a matrix
                 rangeDoppler = np.reshape(rangeDoppler, (configParameters["numDopplerBins"], configParameters["numRangeBins"]),'F') #Fortran-like reshape
@@ -248,12 +256,26 @@ def readAndParseData18xx(Dataport, configParameters):
                 # Generate the range and doppler arrays for the plot
                 rangeArray = np.array(range(configParameters["numRangeBins"]))*configParameters["rangeIdxToMeters"]
                 dopplerArray = np.multiply(np.arange(-configParameters["numDopplerBins"]/2 , configParameters["numDopplerBins"]/2), configParameters["dopplerResolutionMps"])
+
+                print(rangeDoppler)
+                # print(rangeArray)
+                time.sleep(0.5)
+                # print(dopplerArray)
+
+                # continue
                 
-                plt.clf()
-                cs = plt.contourf(rangeArray,dopplerArray,rangeDoppler)
-                fig.colorbar(cs, shrink=0.9)
-                fig.canvas.draw()
-                plt.pause(0.1)
+                # plt.clf()
+                # cs = plt.contourf(rangeArray,dopplerArray,rangeDoppler)
+                # fig.colorbar(cs, shrink=0.9)
+                # fig.canvas.draw()
+                # plt.pause(0.1)
+
+                # plt.plot(rangeArray, label='Range')
+                # plt.plot(dopplerArray, label='Doppler')
+                # plt.xlabel('Index')
+                # plt.ylabel('Value')
+                # plt.legend()
+                # plt.show()
             
                 
                 
@@ -293,7 +315,7 @@ while True:
         if dataOk:
             # Store the current frame into frameData
             frameData[currentIndex] = detObj
-            print(detObj['numObj'])
+            # print(detObj)
             # print(detObj)
             currentIndex += 1
         
