@@ -124,6 +124,7 @@ def readAndParseData18xx(Dataport, configParameters):
     readBuffer = Dataport.read(Dataport.in_waiting)
     byteVec = np.frombuffer(readBuffer, dtype = 'uint8')
     byteCount = len(byteVec)
+    rangeDoppler = None
     
     # Check that the buffer is not full, and then add the data to the buffer
     if (byteBufferLength + byteCount) < maxBufferSize:
@@ -202,7 +203,7 @@ def readAndParseData18xx(Dataport, configParameters):
             word = [1, 2**8, 2**16, 2**24]
 
             # Check the header of the TLV message
-            tlv_type = np.matmul(byteBuffer[idX:idX+4],word)
+            # tlv_type = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
             tlv_length = np.matmul(byteBuffer[idX:idX+4],word)
             idX += 4
@@ -248,8 +249,11 @@ def readAndParseData18xx(Dataport, configParameters):
                 #     continue
 
                 # Convert the range doppler array to a matrix
-                rangeDoppler = np.reshape(rangeDoppler, (configParameters["numDopplerBins"], configParameters["numRangeBins"]),'F') #Fortran-like reshape
-                rangeDoppler = np.append(rangeDoppler[int(len(rangeDoppler)/2):], rangeDoppler[:int(len(rangeDoppler)/2)], axis=0)
+                try:
+                    rangeDoppler = np.reshape(rangeDoppler, (configParameters["numDopplerBins"], configParameters["numRangeBins"]),'F') #Fortran-like reshape
+                    rangeDoppler = np.append(rangeDoppler[int(len(rangeDoppler)/2):], rangeDoppler[:int(len(rangeDoppler)/2)], axis=0)
+                except:
+                    rangeDoppler = None
 
                 # Generate the range and doppler arrays for the plot
                 # rangeArray = np.array(range(configParameters["numRangeBins"]))*configParameters["rangeIdxToMeters"]
@@ -260,7 +264,6 @@ def readAndParseData18xx(Dataport, configParameters):
                 # fig.colorbar(cs, shrink=0.9)
                 # fig.canvas.draw()
                 # plt.pause(0.1)
-                return rangeDoppler
                 
  
         # Remove already processed data
@@ -276,7 +279,7 @@ def readAndParseData18xx(Dataport, configParameters):
             if byteBufferLength < 0:
                 byteBufferLength = 0         
 
-    return dataOK, frameNumber, detObj
+    return rangeDoppler
 
 # -------------------------    MAIN   -----------------------------------------  
 
@@ -294,19 +297,17 @@ accumulate_data = []
 
 while True:
     try:
-        
         rangeDoppler = readAndParseData18xx(Dataport, configParameters)
         if isinstance(rangeDoppler, np.ndarray):
             accumulate_data.append(rangeDoppler.flatten().tolist())
             if len(accumulate_data) > max_frames:
-                print('here')
                 accumulate_data.pop(0)
             if len(accumulate_data) == max_frames:
                 predictions = model.predict(np.array([accumulate_data,]))
-                print(predictions[0])
                 predictions = gesture_list[np.argmax(predictions[0])]
                 if predictions != 'idle':
                     print('Prediction: ', predictions)
+            
             time.sleep(0.025)
         
     # Stop the program and close everything if Ctrl + c is pressed
