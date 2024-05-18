@@ -133,7 +133,10 @@ def main():
             time.sleep(1)
         while (string_data != "RightDone"):
             mqttc.publish(GESTURE_SHOW_TOPIC, "RIGHT")
-            time.sleep(1)               
+            time.sleep(1)      
+        # time.sleep(1)
+        # mqttc.publish(GESTURE_SHOW_TOPIC, "RIGHT")
+        # time.sleep(50)         
 
 if __name__ == "__main__":
     main()
