@@ -4,9 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import time
+import os
 
 # Change the configuration file name
-configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master/A1843RangeDoppler.cfg'
+configFileName = 'AWR1843-Read-Data-Python-MMWAVE-SDK-3--master' + os.sep + 'A1843RangeDoppler.cfg'
 
 CLIport = {}
 Dataport = {}
@@ -28,8 +29,10 @@ def serialConfig(configFileName):
     #Dataport = serial.Serial('/dev/ttyACM1', 921600)
     
     # Windows
-    CLIport = serial.Serial('/dev/ttyACM0', 115200)
-    Dataport = serial.Serial('/dev/ttyACM1', 921600)
+    # CLIport = serial.Serial('/dev/ttyACM0', 115200)
+    # Dataport = serial.Serial('/dev/ttyACM1', 921600)
+    CLIport = serial.Serial('COM10', 115200)
+    Dataport = serial.Serial('COM11', 921600)
 
     # Read the configuration file and send it to the board
     config = [line.rstrip('\r\n') for line in open(configFileName)]
