@@ -62,36 +62,16 @@ data_serial, config_serial = init_serial_connections(data_port, config_port, dat
 if data_serial is None or config_serial is None:
     print("Failed to initialize serial connections. Exiting.")
 else:
-    # Set up the plot
-    fig, ax = plt.subplots()
-    sc = ax.scatter([], [], c='green')
-    ax.set_xlim(0, 6)
-    ax.set_ylim(-1, 1)
-    ax.set_title('Doppler-Range Plot')
-    ax.set_xlabel('Range (meters)')
-    ax.set_ylabel('Doppler (m/s)')
-    ax.grid(True)
-
-    def update(frame):
-        data = read_radar_data(data_serial, packet_size)
-        ranges, dopplers = process_radar_data(data)
-
-        # Debug: Print the ranges and dopplers
-        print(f"Ranges: {ranges}")
-        print(ranges.shape)
-        print(f"Dopplers: {dopplers}")
-        print(dopplers.shape)
-
-        if ranges.size > 0 and dopplers.size > 0:
-            sc.set_offsets(np.c_[ranges, dopplers])
-        return sc,
-
-    ani = FuncAnimation(fig, update, interval=100)
-    plt.show()
-
     try:
         while True:
-            # Keeping the main thread alive
+            data = read_radar_data(data_serial, packet_size)
+            ranges, dopplers = process_radar_data(data)
+
+            # Debug: Print the ranges and dopplers
+            print(f"Ranges: {ranges}")
+            print(ranges.shape)
+            print(f"Dopplers: {dopplers}")
+            print(dopplers.shape)
             time.sleep(1)
 
     except KeyboardInterrupt:
