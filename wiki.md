@@ -66,6 +66,7 @@ The highest level of understanding derived from the knowledge gained. At this st
 - PC Interface
 ## Progress
 - Finish configuring the radar for gesture recognition (3/5/2024)
+![Radar Progress](progress_radar.png)
 - Start trying the machine learning with the radar and develop the AI model (7/5/2024)
 - Start coding the M5 Core 2 for timer purpose (10/5/2024)
 - implement the first method of capturing the data from the mmW radar (14/5/2024)
@@ -76,6 +77,9 @@ The highest level of understanding derived from the knowledge gained. At this st
 ![Machine Learning Loss](loss.png)
 ![Machine Learning Accuracy](accuracy.png)
 - develop and implement the gesture recoginizion on the second M5 Core 2 (14/5/2024)
+![M5 Gesture Progress](progress_gesture.jpg)
+- Develop and tested timer on M5Core2 (14/5/2024)
+![M5 Timer Progress](TimerDisplay.png)
 - develop and implement the LED with the M5 core 2 timer (18/5/2024)
 - Final testing on all aspects of the project (19/5/2024)
 

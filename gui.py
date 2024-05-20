@@ -29,7 +29,11 @@ def create_figure(matrix) -> Figure:
     # plot the data
     figure = Figure(figsize=(6, 6))
     ax = figure.subplots()
-    sns.heatmap(matrix, cbar=True, ax=ax)
+    ax.scatter(matrix[:50], matrix[50:])
+    ax.spines['bottom'].set_position('center')
+    ax.set_xlim((-5, 10))
+    ax.set_ylim((-2000, 2000))
+    ax.autoscale(False)
     return figure
 
 
@@ -131,7 +135,7 @@ def my_mainloop():
 
             global rangeDoppler_figure
             rangeDoppler_figure = rangeDoppler.copy()
-    time.sleep(0.025)
+    time.sleep(0.03)
     redraw_figure(rangeDoppler_figure)
     root.after(50, my_mainloop)
 
