@@ -20,11 +20,11 @@ STOP_MESSAGE = "Stop"
 SECOND_30_MESSAGE = "30 Seconds"
 
 
-GESTURE_LIST = ['idle', 'left', 'right', 'volumeup', 'volumedown']
+GESTURE_LIST = ['idle', 'left', 'right', 'up', 'down']
 GESTURE_FRAMES = 15
 
-RADAR_DATA_PORT = '/dev/ttyACM1'
-RADAR_CONFIG_PORT = '/dev/ttyACM0'
+RADAR_DATA_PORT = 'COM8'
+RADAR_CONFIG_PORT = 'COM3'
 RADAR_DATA_BAUDRATE = 921600  # Baud rate for data port
 RADAR_CONFIG_BAUDRATE = 115200 # Baud rate for configuration port
 
