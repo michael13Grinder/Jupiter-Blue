@@ -122,18 +122,14 @@ def main():
 
     while True:
         global mqttc
-        while (string_data != "UpDone"):
-            mqttc.publish(GESTURE_SHOW_TOPIC, "UP")
-            time.sleep(1)
-        while (string_data != "DownDone"):
-            mqttc.publish(GESTURE_SHOW_TOPIC, "DOWN")
-            time.sleep(1)      
-        while (string_data != "LeftDone"):
-            mqttc.publish(GESTURE_SHOW_TOPIC, "LEFT")
-            time.sleep(1)
-        while (string_data != "RightDone"):
-            mqttc.publish(GESTURE_SHOW_TOPIC, "RIGHT")
-            time.sleep(1)      
+        mqttc.publish(GESTURE_SHOW_TOPIC, "UP")
+        time.sleep(2)
+        mqttc.publish(GESTURE_SHOW_TOPIC, "DOWN")
+        time.sleep(2)      
+        mqttc.publish(GESTURE_SHOW_TOPIC, "LEFT")
+        time.sleep(2)
+        mqttc.publish(GESTURE_SHOW_TOPIC, "RIGHT")
+        time.sleep(2)      
         # time.sleep(1)
         # mqttc.publish(GESTURE_SHOW_TOPIC, "RIGHT")
         # time.sleep(50)         
