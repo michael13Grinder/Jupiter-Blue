@@ -19,7 +19,7 @@ other unkown gestures.
 #### Hardware Architecture
 ![System Breakdown](SystemBreakdown.jpeg)
 #### Top-level Flow Chart of Software IMplementation
-![Message Protocol Diagram](flowchart.jpg)
+![Message Protocol Diagram](project_flowchart.jpg)
 ### Sensor Integration
 #### Sensor
 The A111/AWR1843 mmW Radar will be used for the senor in this project. The Radar is mainly used for capturing gesture. 
