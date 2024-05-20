@@ -1,4 +1,5 @@
 #include "../include/uart.h"
+#include "../include/led.h"
 
 K_MSGQ_DEFINE(uart_queue, sizeof(uint8_t[BUF_SIZE]), QUEUE_SIZE, 4);
 
@@ -41,6 +42,9 @@ void uart_thread() {
     char send_buf[BUF_SIZE] = {0};
     int count = 0;
     while (1) {
+      // toggle_led_blue();
+      k_sleep(K_MSEC(300));
+      // printf("receiving!!!");
       recv_str(usart_dev, recv_buf);
 
       if (recv_buf[0] == 0x0E) {
@@ -48,14 +52,19 @@ void uart_thread() {
       }
 
       // If final byte is 0xFF, then the message breaks
-      if (recv_buf[0] == 0xFF) {
+      // if (recv_buf[0] == 0xFF) {
+      if (recv_buf[0] == '\n') {
         send_buf[count] = '\0';
         break;
       }
 
       if (recv_buf[0] != 0) {
+        // set_led_red(1);
         send_buf[count] = recv_buf[0];
+        printk("%c", send_buf[count]);
         count += 1;
+        send_buf[count] = '\0';
+        break;
       }
 
       k_sleep(K_MSEC(5));

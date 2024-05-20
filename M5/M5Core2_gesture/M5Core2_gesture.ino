@@ -6,11 +6,16 @@
 //#define TRIG_PIN G33
 //#define ECHO_PIN G32
 
+// Define UART parameters
+#define RX_PIN 16
+#define TX_PIN 17
+#define BAUD_RATE 115200
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 const char* ssid = "infrastructure";
-const char* password = "ykyT3GJqnq52";
+const char* password = "BjFBkWCwqYuH";
 const char* mqtt_server = "csse4011-iot.zones.eait.uq.edu.au";
 const char* button_topic = "JupiterBlueButton";
 const char* gesture_topic = "JupiterBlueGestureShow"; // add topic in 2nd file !!!
@@ -38,6 +43,9 @@ void setup() {
   client.setCallback(callback);
   char* msg = "Hello";
   client.publish(button_topic, msg);
+
+  // Initialize UART communication on Serial2
+  Serial2.begin(BAUD_RATE, SERIAL_8N1, RX_PIN, TX_PIN);
 }
 
 void loop() {
@@ -150,29 +158,36 @@ void callback(char* topic, byte* payload, unsigned int length) {
 //        M5.Lcd.print((char)payload[i]);
         msg[i] = (char)payload[i];
     }
-    if (memcmp(msg, "UP", 2) == 0) {
-      drawArrowUp();
-      char* msg = "UpDone";
-      client.publish(button_topic, msg);
-    } else if (memcmp(msg, "DOWN", 4) == 0) {
-      drawArrowDown();
-      char* msg = "DownDone";
-      client.publish(button_topic, msg);
-    } else if (memcmp(msg, "LEFT", 4) == 0) {
-      drawArrowLeft();
-      char* msg = "LeftDone";
-      client.publish(button_topic, msg);
-    } else if (memcmp(msg, "RIGHT", 5) == 0) {
-      drawArrowRight();
-      char* msg = "RightDone";
-      client.publish(button_topic, msg);
-    } 
-    //m5.Lcd.print(msg);
-    // strcmp() -> with "hi"
-//    if (msg == "hi") {
-//      M5.Lcd.printf("\nLets Go!\n");
-//    }
-    M5.Lcd.println();
+    if (!strcmp(topic, gesture_topic)) {
+      if (memcmp(msg, "UP", 2) == 0) {
+        drawArrowUp();
+        char* msg = "UpDone";
+        client.publish(button_topic, msg);
+      } else if (memcmp(msg, "DOWN", 4) == 0) {
+        drawArrowDown();
+        char* msg = "DownDone";
+        client.publish(button_topic, msg);
+      } else if (memcmp(msg, "LEFT", 4) == 0) {
+        drawArrowLeft();
+        char* msg = "LeftDone";
+        client.publish(button_topic, msg);
+      } else if (memcmp(msg, "RIGHT", 5) == 0) {
+        drawArrowRight();
+        char* msg = "RightDone";
+        client.publish(button_topic, msg);
+      } 
+      //m5.Lcd.print(msg);
+      // strcmp() -> with "hi"
+  //    if (msg == "hi") {
+  //      M5.Lcd.printf("\nLets Go!\n");
+  //    }
+      M5.Lcd.println();
+    } else if (!strcmp(topic, button_topic)) {
+      const char *message = "A";
+  
+      // Send data through UART
+      Serial2.println(message);
+    }
 }
 
 void reConnect() {
@@ -183,7 +198,8 @@ void reConnect() {
         if (client.connect(clientId.c_str())) {
             M5.Lcd.printf("\nSuccess\n");
             // client.publish(button_topic, "hello world");
-             client.subscribe(gesture_topic); // Uncomment for 2nd file to subscribe to gesture topic 
+            client.subscribe(gesture_topic);
+            client.subscribe(button_topic);
         } else {
             M5.Lcd.print("failed, rc=");
             M5.Lcd.print(client.state());

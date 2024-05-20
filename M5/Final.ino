@@ -6,7 +6,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 const char* ssid = "infrastructure";
-const char* password = "BjFBkWCwqYuH";
+const char* password = "ykyT3GJqnq52";
 const char* mqtt_server = "csse4011-iot.zones.eait.uq.edu.au";
 const char* button_topic = "JupiterBlueButton";
 

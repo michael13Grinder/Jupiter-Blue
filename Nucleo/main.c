@@ -31,7 +31,9 @@
 1: Blue
 2: Red
 */
-int led = 0;
+int led = 2;
+
+int led_time = 0;
 
 void led_thread(void) {
   while (1) {
@@ -50,46 +52,34 @@ void led_thread(void) {
     }
 
     k_msleep(SLEEP_TIME_MS);
+    led_time += 1;
   }
 }
+
+int last_switch_time = 0;
 
 void main_thread(void) {
   while (1) {
     uint8_t msg[BUF_SIZE] = {0};
     int ret;
 
-    while (1) {
-      // printf("nice");
-      k_msleep(SLEEP_TIME_MS);
-      char msg[16];
-      msg[0] = 'h';
-      msg[1] = 'i';
-      msg[2] = 0xFF;
-      send_str(usart_dev, msg);
-      // send_str(usart_dev, "hi");
-    }
-
-    //  Receive a message from the queue
+    // Receive a message from the queue
     ret = k_msgq_get(&uart_queue, msg, K_FOREVER);
     if (ret != 0) {
       printk("Failed to receive message from queue\n");
       continue;
     }
 
-    printf("LESSGO");
-
-    if (msg[0]) {
-      led = 1;
+    if ((led_time - last_switch_time) < 5) {
       continue;
     }
 
-    if (msg[0] == '0') {
+    led += 1;
+    if (led > 2) {
       led = 0;
-    } else if (msg[0] == '1') {
-      led = 1;
-    } else if (msg[0] == '2') {
-      led = 2;
     }
+
+    last_switch_time = led_time;
   }
 }
 

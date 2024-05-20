@@ -19,6 +19,12 @@ train_images = np.reshape(train_images, (-1, 15, train_images.shape[1]))
 # Normalize data
 train_images = (train_images + 32768) / (32768 * 2)
 
+# Count instances of each class type before undersampling
+class_counts = Counter(train_labels)
+print("Original Training Data Class Counts:")
+for gesture, count in class_counts.items():
+    print(f"{gesture_list[gesture]}: {count} instances")
+
 # Split data
 # Count instances of each class type
 class_counts = Counter(train_labels)
@@ -104,7 +110,7 @@ model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.000001),
               metrics=['accuracy'])
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=300, validation_data=(X_val, y_val), callbacks=[EarlyStopping(patience=20)])
+history = model.fit(X_train, y_train, epochs=150, validation_data=(X_val, y_val), callbacks=[EarlyStopping(patience=20)])
 
 # Plotting loss
 plt.plot(history.history['loss'], label='Training Loss')
