@@ -30,16 +30,17 @@ echo back to the radar. It can help the sensor to track down the movement of the
 change of the gesture. It can help the radar to detect the change of gesture and help identifying the gesture. Finally, it can capture the the micro-doppler signature which can be used
 to determine the information about small-scale motion. It can tell the structure of the gesture and the motion pattern of it. It is typically used for machine learning to recognize
 the gesture.
+The most important data for gesture recognition is the Doppler and range data. It can allow us to identify the valid data points and recognize pattern accordingly.
 #### Sensor Integration
 The radar will be placed in front of the PC which is for the HID interface. The radar will connect to the PC directly. Whenever a gesture is performed in front of the radar the radar will capture the data and send them to PC. At the beginning, all the data will be used for machine learning.
-After the learning process is finished, the sensor data will be used to recognize gesture. After the gesture is recognized, action will be performed in the HID interface correspondingly. It will be used to perform action for presentation
+After the learning process is finished, the sensor data will be used to recognize gesture. After the gesture is recognized, action will be performed in the HID interface correspondingly. It will be used to perform action for presentation.
 ### Wireless Network Communication
 #### Network Topology and IoT Protocols:
 - MQTT (Message Queuing Telemetry Transport): Used for communication between the M5core2 device and the NRF52840_DK board. MQTT is a lightweight and efficient protocol for IoT communication, ideal for low-power devices and scenarios where bandwidth is limited.
 - Serial Communication: Employed to connect the NRF52840_DK board to the PC software running Python for machine learning. Serial communication provides a reliable and straightforward way to transfer data between devices over a physical connection.
 #### Data Rate Requirement:
 Given the real-time or near real-time nature of gesture recognition, the data rate required for communication should be capable of handling multiple gestures per second. The specific data rate will depend on factors such as the complexity of gestures, the frequency of updates, and the precision required for gesture recognition.
-MQTT is generally efficient and can handle moderate data rates effectively. Serial communication between the NRF52840_DK board and the PC is typically fast enough to support real-time data transfer for gesture recognition applications.
+MQTT is generally efficient and can handle moderate data rates effectively. Serial communication between the Nucleo-L496ZG board and the PC is typically fast enough to support real-time data transfer for gesture recognition applications.
 #### Message Protocol Diagram
 ![Message Protocol Diagram](protocol_diagram.jpeg)
 ### Algorithms for Machine Learning
