@@ -20,7 +20,7 @@ STOP_MESSAGE = "Stop"
 SECOND_30_MESSAGE = "30 Seconds"
 
 
-GESTURE_LIST = ['idle', 'left', 'right', 'volumeup', 'volumedown']
+GESTURE_LIST = ['idle', 'left', 'right', 'up', 'down']
 GESTURE_FRAMES = 15
 
 RADAR_DATA_PORT = '/dev/ttyACM1'
@@ -94,6 +94,7 @@ def main():
     model = keras.models.load_model('trained_model.keras')
 
     accumulate_data = []
+    last_send = time.time()
 
     while True:
         try:
@@ -116,8 +117,12 @@ def main():
                             print(predictions)
                             last_action == predictions
                             last_send = time.time()
-                            pyautogui.press(predictions)
-                            mqttc.publish(GESTURE_SHOW_TOPIC, predictions.upper())                    
+                            if predictions != 'idle':
+                                if predictions == 'left' or predictions == 'right':
+                                    pyautogui.press(predictions)
+                                else:
+                                    pyautogui.press('volume' + predictions)
+                                mqttc.publish(GESTURE_SHOW_TOPIC, predictions.upper())                    
             time.sleep(0.03)
             
         # Stop the program and close everything if Ctrl + c is pressed
