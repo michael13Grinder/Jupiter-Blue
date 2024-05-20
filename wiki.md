@@ -1,6 +1,6 @@
 # Jupiter - Blue Wiki
 ## Team Member List and Roles
-Tsz Chung Mak - mmW Radar Implementation <br>
+Tsz Chung Mak - mmW Radar Implementation & capturing the data from radar <br>
 Jayden Situ - M5Core2 Communication <br>
 Michael Guarrera - Machine Learning Algorithm <br>
 Thuan Pham - Machine Learning Algorithm
@@ -61,13 +61,20 @@ Involves the application of machine learning algorithms to analyze the informati
 The highest level of understanding derived from the knowledge gained. At this stage, the system is capable of accurately recognizing a wide range of gestures using mmW Radar data. It can translate these gestures into actions on a computer, such as controlling the mouse cursor or simulating keyboard inputs. Additionally, the system can display the recognized gestures as icons on the M5core2 device, providing real-time feedback to the user.
 ## Equipment
 - M5Core2 x 2
-- NRF52840 DK
-- mmW Radar
+- Nucleo-L496ZG
+- mmW Radar (AWR1843)
 - PC Interface
 ## Progress
-- Finish configuring the radar for gesture recognition
-- Start trying the machine learning with the radar
-- Start coding the M5 Core 2 for timer purpose
+- Finish configuring the radar for gesture recognition (3/5/2024)
+- Start trying the machine learning with the radar and develop the AI model (7/5/2024)
+- Start coding the M5 Core 2 for timer purpose (10/5/2024)
+- implement the first method of capturing the data from the mmW radar (14/5/2024)
+- test the first method with AI model (16/5/2024)
+- develop a second method to capture the data from the mmW radar (16/5/2024)
+- test the second method with AI model (17/5/2024)
+- develop and implement the gesture recoginizion on the second M5 Core 2 (14/5/2024)
+- develop and implement the LED with the M5 core 2 timer (18/5/2024)
+- Final testing on all aspects of the project (19/5/2024)
 
 ### Publish Gesture
 
