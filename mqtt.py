@@ -7,11 +7,9 @@ import math
 import json
 import numpy as np
 
-
 MQTT_HOST = "csse4011-iot.zones.eait.uq.edu.au"
 BUTTON_TOPIC = "JupiterBlueButton"
 GESTURE_TOPIC = "JupiterBlueGesture"
-
 
 SERIAL_PORT = "/dev/ttyACM0"
 # SERIAL_PORT = 'COM6'
