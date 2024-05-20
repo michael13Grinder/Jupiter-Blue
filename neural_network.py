@@ -12,8 +12,7 @@ train_images = np.loadtxt(train_images_path, dtype=float)
 train_labels = np.loadtxt(train_labels_path, dtype=int)
 
 train_images = np.reshape(train_images, (-1, frame_per_action, train_images.shape[1]))
-
-train_images = train_images / 50000
+train_images = np.nan_to_num(train_images)
 
 print("Train Image Shape: ", train_images.shape)
 print("Train Label Shape: ", train_labels.shape)
@@ -30,7 +29,7 @@ model = keras.Sequential([
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-model.fit(train_images, train_labels, epochs=50)
+model.fit(train_images, train_labels, epochs=5)
 
 test_loss, test_acc = model.evaluate(train_images,  train_labels, verbose=1) 
 
