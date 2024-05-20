@@ -20,7 +20,6 @@ def read_radar_data(data_serial, packet_size):
         while len(buffer) < packet_size:
             packet = data_serial.read(packet_size - len(buffer))
             buffer.extend(packet)
-        
         # Unpack the binary data into an array of floats
         num_floats = packet_size // 4  # 4 bytes per float
         data = struct.unpack(f'{num_floats}f', buffer)

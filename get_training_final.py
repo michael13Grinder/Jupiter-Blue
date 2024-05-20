@@ -43,7 +43,6 @@ while True:
                 rangeDoppler = np.append(ranges, dopplers)
             else:
                 rangeDoppler = None
-                
             if isinstance(rangeDoppler, np.ndarray):
                 if not isinstance(accumulate_data, np.ndarray):
                     accumulate_data = rangeDoppler.copy()
@@ -58,7 +57,6 @@ while True:
         np.savetxt(X_train_file, accumulate_data, fmt='%1.4f')
         count += 1
         print(count)
-
         gesture_encoding = "0"
         if (gesture_label == "idle"):
             gesture_encoding = "0"

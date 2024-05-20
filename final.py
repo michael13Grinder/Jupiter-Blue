@@ -23,12 +23,6 @@ SECOND_30_MESSAGE = "30 Seconds"
 GESTURE_LIST = ['idle', 'left', 'right', 'volumeup', 'volumedown']
 GESTURE_FRAMES = 15
 
-SERIAL_PORT = "/dev/ttyACM0"
-# SERIAL_PORT = 'COM6'
-BAUD_RATE = 115200
-# BAUD_RATE = 9600
-TIMEOUT = 1
-
 RADAR_DATA_PORT = '/dev/ttyACM1'
 RADAR_CONFIG_PORT = '/dev/ttyACM0'
 RADAR_DATA_BAUDRATE = 921600  # Baud rate for data port
@@ -52,11 +46,6 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
     client.disconnect()
 
 def on_message(client, userdata, message):
-    # print(f"Distance (cm): {message.payload}")
-    # global string_data
-    # string_data = message.payload.decode('utf-8')  # Decode byte data to string
-    # ultrasonic_data = int(string_data) / 100 # Convert string to integer
-    # print(string_data)
     message = message.payload.decode('utf-8')
     global radar_status
     if message == START_MESSAGE:
@@ -83,57 +72,10 @@ def mqtt_thread():
 
     # mqttc.publish()
 
-def serial_thread():
-    while True:
-        while True:
-            try:
-                ser = serial.Serial(SERIAL_PORT, baudrate=BAUD_RATE, timeout=TIMEOUT)
-
-                print("Connected")
-                break
-            except:
-                # print("Failed Connect")
-                pass
-
-        while True:
-            data_str = ""
-            while True:
-                try:
-                    byte = ser.read()  # Read one byte at a time
-                    if byte:
-                        # Append the byte to the string
-                        # print(byte)
-                        data_str += byte.decode('utf-8')  # Assuming UTF-8 encoding
-                        # Check if the entire JSON string has been received
-                        if data_str.endswith('}'):
-                            break  # Exit the loop once the JSON string is complete
-                except:
-                    print("Disconnected")
-                    break
-            
-            print("Received:", data_str)
-
-            # Parse JSON string into a Python dictionary
-            data = json.loads(data_str)
-
-
-            # Accessing values from the dictionary
-            node = data['node']
-            x_coordinate = data['x']
-            y_coordinate = data['y']
-            rssi_value = data['rssi']
-
-
-            time.sleep(0.1)
-
 def main():
     mqtt_thread_id = threading.Thread(target=mqtt_thread)
     mqtt_thread_id.daemon = True
     mqtt_thread_id.start()
-
-    serial_thread_id = threading.Thread(target=serial_thread)
-    serial_thread_id.daemon = True
-    serial_thread_id.start()
 
     global mqttc
     last_action = 'idle'
