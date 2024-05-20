@@ -72,6 +72,9 @@ The highest level of understanding derived from the knowledge gained. At this st
 - test the first method with AI model (16/5/2024)
 - develop a second method to capture the data from the mmW radar (16/5/2024)
 - test the second method with AI model (17/5/2024)
+- Improved AI model with data normalisation, splitting the data into a training set and a validation set with a 70/30 split. Also normalised the amount of each possible output so that it wouldn't be biased towards the more common ones. Before this average validation of 25%, after making all classes proportional accuracy dropped to 20%. After AI improvements accuracy increased to around 30%.
+![Machine Learning Loss](loss.png)
+![Machine Learning Accuracy](accuracy.png)
 - develop and implement the gesture recoginizion on the second M5 Core 2 (14/5/2024)
 - develop and implement the LED with the M5 core 2 timer (18/5/2024)
 - Final testing on all aspects of the project (19/5/2024)
