@@ -20,7 +20,7 @@ STOP_MESSAGE = "Stop"
 SECOND_30_MESSAGE = "30 Seconds"
 
 
-GESTURE_LIST = ['idle', 'left', 'right', 'up', 'down']
+GESTURE_LIST = ['idle', 'left', 'right', 'volumeup', 'volumedown']
 GESTURE_FRAMES = 15
 
 RADAR_DATA_PORT = '/dev/ttyACM1'
