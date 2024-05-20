@@ -162,19 +162,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
       if (memcmp(msg, "UP", 2) == 0) {
         drawArrowUp();
         char* msg = "UpDone";
-        client.publish(button_topic, msg);
       } else if (memcmp(msg, "DOWN", 4) == 0) {
         drawArrowDown();
         char* msg = "DownDone";
-        client.publish(button_topic, msg);
       } else if (memcmp(msg, "LEFT", 4) == 0) {
         drawArrowLeft();
         char* msg = "LeftDone";
-        client.publish(button_topic, msg);
       } else if (memcmp(msg, "RIGHT", 5) == 0) {
         drawArrowRight();
         char* msg = "RightDone";
-        client.publish(button_topic, msg);
       } 
       //m5.Lcd.print(msg);
       // strcmp() -> with "hi"

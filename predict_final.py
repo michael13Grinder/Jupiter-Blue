@@ -36,7 +36,6 @@ max_frames = 15
 gesture_list = ['idle', 'left', 'right', 'up', 'down']
 
 accumulate_data = []
-
 while True:
     try:
         

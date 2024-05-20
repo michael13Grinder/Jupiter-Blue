@@ -26,7 +26,6 @@ X_train_file = open("X_train.txt", "a")
 y_train_gesture_file = open("y_train_gesture.txt", "a")
 gesture_list = ['idle', 'left', 'right', 'up', 'down']
 count = 0
-
 while True:
     try:
         gesture_label = input("Enter the gesture label (e.g., left): ")
