@@ -4,6 +4,7 @@ Tsz Chung Mak - mmW Radar Implementation & capturing the data from radar <br>
 Jayden Situ - M5Core2 Communication <br>
 Michael Guarrera - Machine Learning Algorithm <br>
 Thuan Pham - Machine Learning Algorithm
+![Message Protocol Diagram](TeamPhoto.jpeg)
 ## Project Overview
 The mmW Radar is used to receognize gesture and perform actions with HID interface which can controls the slides and volume of video during presentation. A M5 core 2 will be used to display the gesture performed by the user. Another M5 Core 2 is used as a timer which assist uper during presentation.
 ### Performance Indicator:
